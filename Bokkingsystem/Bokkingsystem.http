@@ -1,0 +1,6 @@
+@Bokkingsystem_HostAddress = http://localhost:5094
+
+GET {{Bokkingsystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
