@@ -9,6 +9,7 @@ namespace Bokkingsystem
         public AutoMapperProfile()
         {
             CreateMap<Appointment, AppointmentDto>();
+            CreateMap<AppointmentDto, Appointment >();
         }
 
     }

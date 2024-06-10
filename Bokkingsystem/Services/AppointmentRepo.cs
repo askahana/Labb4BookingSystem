@@ -35,9 +35,16 @@ namespace Bokkingsystem.Services
             return await _db.Appointments.AnyAsync(a => a.CustomerId == cusomterId);
         }
 
-        public Task<Appointment> Delete(int id)
+        public async Task<Appointment> Delete(int id)
         {
-            throw new NotImplementedException();
+            var result = await _db.Appointments.FirstOrDefaultAsync(a => a.AppointmentId == id);
+            if(result != null)
+            {
+                _db.Appointments.Remove(result);
+                await _db.SaveChangesAsync();
+                return result;
+            }
+            return null;
         }
 
         public async Task<IEnumerable<Appointment>> GetAll()
@@ -64,7 +71,7 @@ namespace Bokkingsystem.Services
                 Where(a=> a.BookedDate >= firstDate && a.BookedDate <= lastDate)
                 .Where(a=> a.CompanyId == companyId).ToListAsync();
         }
-
+        // Alla appointments by specific week
         public async Task<IEnumerable<Appointment>> GetAllByWeek(int year, int weekNum)
         {
             DateTime sunday = ISOWeek.ToDateTime(year, weekNum, 0);
@@ -74,15 +81,52 @@ namespace Bokkingsystem.Services
                 .Include(c => c.Customer).Include(c => c.Company).
                 Where(a=> a.BookedDate >= monday && a.BookedDate <= sunday).ToListAsync();
         }
+        // All Appointments by specific customerID and specific week
+        public async Task<IEnumerable<Appointment>> GetAllByWeekAndCusomterID(int year, int weekNum, int customerId)
+        {
+            DateTime sunday = ISOWeek.ToDateTime(year, weekNum, 0);
+            DateTime monday = sunday.AddDays(-6);
 
+            return await _db.Appointments
+                .Include(c => c.Customer).Include(c => c.Company).
+                Where(a => a.BookedDate >= monday && a.BookedDate <= sunday && a.CustomerId == customerId).ToListAsync();
+        }
+
+        
         public async Task<Appointment> GetSingel(int appointmentId)
         {
             return await _db.Appointments.Where(a => a.AppointmentId == appointmentId).FirstOrDefaultAsync();
         }
 
-        public Task<Appointment> Update(Appointment entity)
+        public async Task<Appointment> Update(Appointment entity)
         {
-            throw new NotImplementedException();
+            var result = await _db.Appointments.FirstOrDefaultAsync
+                (a => a.AppointmentId == entity.AppointmentId);
+   
+            if (result != null)
+            {
+                var history = new History
+                {
+                    AppointmentId = result.AppointmentId,
+                    ModifiedDate = DateTime.Now,
+
+            
+                };
+                
+                result.BookedDate = entity.BookedDate;
+                result.ModifiedDate = DateTime.Now;
+                _db.Histories.Add(history);
+                await _db.SaveChangesAsync();
+                return result;
+            }
+            return null;
         }
+
+        /*  var hisotry = await _db.Histories.FirstOrDefaultAsync
+         (a => a.AppointmentId == entity.AppointmentId);
+     hisotry.ModifiedDate = DateTime.Now;
+     hisotry.AppointmentId = entity.AppointmentId;
+     hisotry.Description = "Changed";
+     await _db.SaveChangesAsync();*/
     }
 }

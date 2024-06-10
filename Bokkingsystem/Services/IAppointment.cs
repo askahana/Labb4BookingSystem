@@ -10,6 +10,7 @@ namespace Bokkingsystem.Services
         Task<IEnumerable<Appointment>> GetAllByCompanyId(int companyId);
 
         Task<IEnumerable<Appointment>> GetAllByWeek(int year, int weekNum);
+        Task<IEnumerable<Appointment>> GetAllByWeekAndCusomterID(int year, int weekNum, int customerId);
         Task<IEnumerable<Appointment>> GetAllByMonth(int year, int month, int companyId);
 
         Task<Appointment> Update(Appointment entity);

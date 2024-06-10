@@ -4,6 +4,8 @@ using BookingModels;
 using BookingModels.DTOs;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.Design;
+using System.Numerics;
 
 namespace Bokkingsystem.Controllers
 {
@@ -59,7 +61,7 @@ namespace Bokkingsystem.Controllers
                }
                 var infoByCusomteId = _mapper.Map<List<AppointmentDto>>(await _repo.GetAllByCustomerId(customerId));
                 return Ok(infoByCusomteId);
-                //return Ok(await _repo.GetAllByCustomerId(customerId));
+                
             }
             catch (Exception)
             {
@@ -90,6 +92,11 @@ namespace Bokkingsystem.Controllers
         {
             try
             {
+                var appointments = await _repo.GetAllByWeek(year, week);
+                if (appointments == null)
+                {
+                    return NotFound($"Appointments week {week} was not found.");
+                }
                 return Ok(await _repo.GetAllByWeek(year, week));
             }
             catch (Exception)
@@ -98,6 +105,26 @@ namespace Bokkingsystem.Controllers
                    "Error to retrive data from database");
             }
         }
+        [HttpGet("customer/{customerId}/week/{year}/{week}")]
+        public async Task<IActionResult> GetAllAppointmentsByWeekandId(int year, int week, int cusomterId)
+        {
+            try
+            {
+                var appointments = await _repo.GetAllByWeekAndCusomterID(year, week, cusomterId);
+                if (appointments == null)
+                {
+                    return NotFound($"Appointments week {week} was not found.");
+                }
+                return Ok(new { Count = appointments.Count(), Appointments = appointments });
+                //return Ok(appointments);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   "Error to retrive data from database");
+            }
+        }
+
         [HttpGet("month")]
         public async Task<IActionResult> GetAllAppointmentsByMonth(int year, int month, int companyId)
         {
@@ -115,7 +142,72 @@ namespace Bokkingsystem.Controllers
                    "Error to retrive data from database");
             }
         }
+        [HttpDelete("{id:int}")] 
+        public async Task<IActionResult> DeleteAppointment(int id)
+        {
+            try
+            {
+                var appointmentToDelete = await _repo.GetSingel(id);
+                if(appointmentToDelete == null)
+                {
+                    return NotFound($"Appointment with ID {id} was not found.");
+                }
+                await _repo.Delete(id);
+                return Ok($"Appointment with ID {id} was deleted.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error to delete data from databasen.");
+            }
+        }
 
+        [HttpPost]
+        public async Task<ActionResult<Appointment>> CreateNewAppointment(Appointment newAppointment)
+        {
+            try
+            {
+                if (newAppointment == null)
+                {
+                    return BadRequest("Appointment data is null");
+                }
+                newAppointment.CreatedDate = DateTime.Now;
+                newAppointment.ModifiedDate = null;
+
+                var result = await _repo.Add(newAppointment);
+                return CreatedAtAction(nameof(GetSingel),
+                    new { appointmentId = result.AppointmentId }, result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error creating new appointment in the database.");
+            }
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<Appointment>> UppdateAppointment(int appointmentId, Appointment appointment)
+        {
+            try
+            {
+                if(appointmentId != appointment.AppointmentId)
+                {
+                    return BadRequest("Id does not match.");
+                }
+                var appointmentToUpdate = await _repo.GetSingel(appointmentId);
+                if(appointmentToUpdate == null)
+                {
+                    return NotFound($"Appointment with ID {appointmentId} was not found.");
+                }
+                return await _repo.Update(appointment);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                   "Error to update data into Database.");
+            }
+
+        }
 
     }
 }

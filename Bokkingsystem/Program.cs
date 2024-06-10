@@ -1,6 +1,7 @@
 
 using Bokkingsystem.Data;
 using Bokkingsystem.Services;
+using BookingModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bokkingsystem
@@ -22,6 +23,8 @@ namespace Bokkingsystem
             options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
             builder.Services.AddScoped<IAppointment, AppointmentRepo>();
+            builder.Services.AddScoped<IHisotry, HistoryRepository>();
+            builder.Services.AddScoped<IBooking<Customer>, CustomerRepo>();
             builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 
             builder.Services.AddControllers().AddJsonOptions(options =>
@@ -29,7 +32,7 @@ namespace Bokkingsystem
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
             });
 
-
+            builder.Services.AddAuthorization();
 
             /*
             builder.Services.AddAuthentication(options =>
