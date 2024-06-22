@@ -1,9 +1,10 @@
-﻿using BookingModels;
+﻿using Bokkingsystem.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bokkingsystem.Data
 {
-    public class BookingDbContext:DbContext
+    public class BookingDbContext: IdentityDbContext<AppUser>
     {
         public BookingDbContext(DbContextOptions<BookingDbContext> Options): base(Options) { }
       
@@ -16,22 +17,36 @@ namespace Bokkingsystem.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Company>()
+                .HasOne(c => c.AppUser)
+                .WithOne(u => u.Company)
+                .HasForeignKey<Company>(c => c.AppUserId);
+
+            modelBuilder.Entity<Customer>()
+                .HasOne(c => c.AppUser)
+                .WithOne(u => u.Customer)
+                .HasForeignKey<Customer>(c => c.AppUserId);
+
             modelBuilder.Entity<Company>().HasData(new Company
             {
                 CompanyId = 1,
-                CompanyName = "Saftfabriken"
+                CompanyName = "Saftfabriken",
+                Email = "company1@gmail.com",
+                Password = "Company@123"
             }) ;
             modelBuilder.Entity<Company>().HasData(new Company
             {
                 CompanyId = 2,
-                CompanyName = "Pommesfabriken"
+                CompanyName = "Pommesfabriken",
+                Email = "company2@gmail.com",
+                Password = "Company@123"
             });
             modelBuilder.Entity<Customer>().HasData(new Customer
             {
                 CustomerId = 1,
                 FirstName = "Andreas",
                 LastName = "Andersson",
-                Email = "andre@mail.se",
+                Email = "customer1@mail.se",
                 UserName = "Andreas",
                 Password = "1234"
             });
@@ -40,7 +55,7 @@ namespace Bokkingsystem.Data
                 CustomerId = 2,
                 FirstName = "Bengt",
                 LastName = "Bengtsson",
-                Email = "benben@mail.se",
+                Email = "customer2@mail.se",
                 UserName = "benben",
                 Password = "1234"
             });
@@ -49,7 +64,7 @@ namespace Bokkingsystem.Data
                 CustomerId = 3,
                 FirstName = "Carl",
                 LastName = "Carlsson",
-                Email = "carl@mail.se",
+                Email = "customer3@mail.se",
                 UserName = "carlycarl",
                 Password = "1234"
             });
@@ -98,8 +113,6 @@ namespace Bokkingsystem.Data
                 CreatedDate = DateTime.Now,
                 ModifiedDate = null,
             });
-
         }
-
     }
 }

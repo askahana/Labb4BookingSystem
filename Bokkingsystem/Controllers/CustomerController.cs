@@ -1,5 +1,6 @@
-﻿using Bokkingsystem.Services;
-using BookingModels;
+﻿using Bokkingsystem.Models.Entities;
+using Bokkingsystem.Services;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

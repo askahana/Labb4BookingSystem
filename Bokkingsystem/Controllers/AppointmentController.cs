@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Bokkingsystem.Models.DTOs;
+using Bokkingsystem.Models.Entities;
 using Bokkingsystem.Services;
-using BookingModels;
-using BookingModels.DTOs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.Design;
@@ -21,6 +23,7 @@ namespace Bokkingsystem.Controllers
             _mapper = mapper;
         }
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyPolicy")]
         public async Task<IActionResult> GetAllAppointments()
         {
             try
@@ -34,6 +37,7 @@ namespace Bokkingsystem.Controllers
             }
         }
         [HttpGet("appointment/{appointmentId}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyPolicy")]
         public async Task<IActionResult> GetSingel(int appointmentId)
         {
             try
@@ -51,6 +55,7 @@ namespace Bokkingsystem.Controllers
             }
         }
         [HttpGet("customer/{customerId}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomer5Policy")]
         public async Task<IActionResult> GetAllAppointmentsByCustomer(int customerId)
         {
             try
@@ -70,6 +75,7 @@ namespace Bokkingsystem.Controllers
             }
         }
         [HttpGet("company/{companyId}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyPolicy")]
         public async Task<IActionResult> GetAllAppointmentsByCompany(int companyId)
         {
             try
@@ -88,6 +94,7 @@ namespace Bokkingsystem.Controllers
         }
 
         [HttpGet("weekNumber")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyPolicy")]
         public async Task<IActionResult> GetAllAppointmentsByWeek(int year, int week)
         {
             try
@@ -106,6 +113,7 @@ namespace Bokkingsystem.Controllers
             }
         }
         [HttpGet("customer/{customerId}/week/{year}/{week}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyPolicy")]
         public async Task<IActionResult> GetAllAppointmentsByWeekandId(int year, int week, int cusomterId)
         {
             try
@@ -126,6 +134,7 @@ namespace Bokkingsystem.Controllers
         }
 
         [HttpGet("month")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyPolicy")]
         public async Task<IActionResult> GetAllAppointmentsByMonth(int year, int month, int companyId)
         {
             try
@@ -142,7 +151,8 @@ namespace Bokkingsystem.Controllers
                    "Error to retrive data from database");
             }
         }
-        [HttpDelete("{id:int}")] 
+        [HttpDelete("{id:int}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomer5Policy")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
             try
@@ -163,6 +173,7 @@ namespace Bokkingsystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomer5Policy")]
         public async Task<ActionResult<Appointment>> CreateNewAppointment(Appointment newAppointment)
         {
             try
@@ -186,6 +197,7 @@ namespace Bokkingsystem.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomer5Policy")]
         public async Task<ActionResult<Appointment>> UppdateAppointment(int appointmentId, Appointment appointment)
         {
             try

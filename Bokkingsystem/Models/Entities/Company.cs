@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Bokkingsystem.Data;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BookingModels
+namespace Bokkingsystem.Models.Entities
 {
     public class Company
     {
@@ -22,6 +18,7 @@ namespace BookingModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public AppUser AppUser { get; set; }
+        public string AppUserId { get; set; }
         public string Role { get; set; } = "Company";
     }
 }

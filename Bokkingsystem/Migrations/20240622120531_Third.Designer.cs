@@ -4,6 +4,7 @@ using Bokkingsystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bokkingsystem.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622120531_Third")]
+    partial class Third
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,14 +33,8 @@ namespace Bokkingsystem.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("CompanyId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -96,7 +93,7 @@ namespace Bokkingsystem.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.Appointment", b =>
+            modelBuilder.Entity("BookingModels.Appointment", b =>
                 {
                     b.Property<int>("AppointmentId")
                         .ValueGeneratedOnAdd()
@@ -133,7 +130,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 1,
                             BookedDate = new DateTime(2024, 4, 23, 14, 30, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 22, 19, 45, 56, 919, DateTimeKind.Local).AddTicks(8646),
+                            CreatedDate = new DateTime(2024, 6, 22, 14, 5, 30, 631, DateTimeKind.Local).AddTicks(5622),
                             CustomerId = 1
                         },
                         new
@@ -141,7 +138,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 2,
                             BookedDate = new DateTime(2024, 4, 25, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 22, 19, 45, 56, 919, DateTimeKind.Local).AddTicks(8708),
+                            CreatedDate = new DateTime(2024, 6, 22, 14, 5, 30, 631, DateTimeKind.Local).AddTicks(5669),
                             CustomerId = 1
                         },
                         new
@@ -149,7 +146,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 3,
                             BookedDate = new DateTime(2024, 4, 29, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 22, 19, 45, 56, 919, DateTimeKind.Local).AddTicks(8720),
+                            CreatedDate = new DateTime(2024, 6, 22, 14, 5, 30, 631, DateTimeKind.Local).AddTicks(5680),
                             CustomerId = 1
                         },
                         new
@@ -157,7 +154,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 4,
                             BookedDate = new DateTime(2024, 5, 21, 14, 30, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 22, 19, 45, 56, 919, DateTimeKind.Local).AddTicks(8730),
+                            CreatedDate = new DateTime(2024, 6, 22, 14, 5, 30, 631, DateTimeKind.Local).AddTicks(5691),
                             CustomerId = 1
                         },
                         new
@@ -165,21 +162,18 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 5,
                             BookedDate = new DateTime(2024, 5, 22, 11, 15, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 22, 19, 45, 56, 919, DateTimeKind.Local).AddTicks(8739),
+                            CreatedDate = new DateTime(2024, 6, 22, 14, 5, 30, 631, DateTimeKind.Local).AddTicks(5700),
                             CustomerId = 2
                         });
                 });
 
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.Company", b =>
+            modelBuilder.Entity("BookingModels.Company", b =>
                 {
                     b.Property<int>("CompanyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyId"));
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CompanyName")
                         .IsRequired()
@@ -198,10 +192,6 @@ namespace Bokkingsystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CompanyId");
-
-                    b.HasIndex("AppUserId")
-                        .IsUnique()
-                        .HasFilter("[AppUserId] IS NOT NULL");
 
                     b.ToTable("Companies");
 
@@ -224,16 +214,13 @@ namespace Bokkingsystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.Customer", b =>
+            modelBuilder.Entity("BookingModels.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -262,10 +249,6 @@ namespace Bokkingsystem.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.HasKey("CustomerId");
-
-                    b.HasIndex("AppUserId")
-                        .IsUnique()
-                        .HasFilter("[AppUserId] IS NOT NULL");
 
                     b.ToTable("Customers");
 
@@ -302,7 +285,7 @@ namespace Bokkingsystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.History", b =>
+            modelBuilder.Entity("BookingModels.History", b =>
                 {
                     b.Property<int>("HistoryId")
                         .ValueGeneratedOnAdd()
@@ -459,15 +442,15 @@ namespace Bokkingsystem.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.Appointment", b =>
+            modelBuilder.Entity("BookingModels.Appointment", b =>
                 {
-                    b.HasOne("Bokkingsystem.Models.Entities.Company", "Company")
+                    b.HasOne("BookingModels.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bokkingsystem.Models.Entities.Customer", "Customer")
+                    b.HasOne("BookingModels.Customer", "Customer")
                         .WithMany("Appointment")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -478,27 +461,9 @@ namespace Bokkingsystem.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.Company", b =>
+            modelBuilder.Entity("BookingModels.History", b =>
                 {
-                    b.HasOne("Bokkingsystem.Data.AppUser", "AppUser")
-                        .WithOne("Company")
-                        .HasForeignKey("Bokkingsystem.Models.Entities.Company", "AppUserId");
-
-                    b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.Customer", b =>
-                {
-                    b.HasOne("Bokkingsystem.Data.AppUser", "AppUser")
-                        .WithOne("Customer")
-                        .HasForeignKey("Bokkingsystem.Models.Entities.Customer", "AppUserId");
-
-                    b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.History", b =>
-                {
-                    b.HasOne("Bokkingsystem.Models.Entities.Appointment", "Appointment")
+                    b.HasOne("BookingModels.Appointment", "Appointment")
                         .WithMany()
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -558,14 +523,7 @@ namespace Bokkingsystem.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bokkingsystem.Data.AppUser", b =>
-                {
-                    b.Navigation("Company");
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("Bokkingsystem.Models.Entities.Customer", b =>
+            modelBuilder.Entity("BookingModels.Customer", b =>
                 {
                     b.Navigation("Appointment");
                 });

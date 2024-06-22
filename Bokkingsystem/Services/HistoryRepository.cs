@@ -1,5 +1,5 @@
 ﻿using Bokkingsystem.Data;
-using BookingModels;
+using Bokkingsystem.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bokkingsystem.Services

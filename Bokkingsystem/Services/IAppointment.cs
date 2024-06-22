@@ -1,4 +1,6 @@
-﻿using BookingModels;
+﻿
+
+using Bokkingsystem.Models.Entities;
 
 namespace Bokkingsystem.Services
 {
