@@ -28,9 +28,9 @@ namespace Bokkingsystem.Models.Entities
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public string Role { get; set; } = "Customer";
-        public AppUser AppUser { get; set; }
-        public string AppUserId { get; set; }
+        public string Role { get; set; } = "customer";
+      //  public AppUser AppUser { get; set; }
+       // public string AppUserId { get; set; }
         public ICollection<Appointment> Appointment { get; set; }
 
     }

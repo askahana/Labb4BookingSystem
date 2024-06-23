@@ -4,6 +4,7 @@ using Bokkingsystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bokkingsystem.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623124031_seventh")]
+    partial class seventh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,7 +146,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 1,
                             BookedDate = new DateTime(2024, 4, 23, 14, 30, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7392),
+                            CreatedDate = new DateTime(2024, 6, 23, 14, 40, 31, 543, DateTimeKind.Local).AddTicks(8805),
                             CustomerId = 1
                         },
                         new
@@ -151,7 +154,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 2,
                             BookedDate = new DateTime(2024, 4, 25, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7608),
+                            CreatedDate = new DateTime(2024, 6, 23, 14, 40, 31, 543, DateTimeKind.Local).AddTicks(8868),
                             CustomerId = 1
                         },
                         new
@@ -159,7 +162,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 3,
                             BookedDate = new DateTime(2024, 4, 29, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7650),
+                            CreatedDate = new DateTime(2024, 6, 23, 14, 40, 31, 543, DateTimeKind.Local).AddTicks(8879),
                             CustomerId = 1
                         },
                         new
@@ -167,7 +170,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 4,
                             BookedDate = new DateTime(2024, 5, 21, 14, 30, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7700),
+                            CreatedDate = new DateTime(2024, 6, 23, 14, 40, 31, 543, DateTimeKind.Local).AddTicks(8889),
                             CustomerId = 1
                         },
                         new
@@ -175,7 +178,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 5,
                             BookedDate = new DateTime(2024, 5, 22, 11, 15, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7716),
+                            CreatedDate = new DateTime(2024, 6, 23, 14, 40, 31, 543, DateTimeKind.Local).AddTicks(8898),
                             CustomerId = 2
                         });
                 });
@@ -214,7 +217,7 @@ namespace Bokkingsystem.Migrations
                             CompanyId = 1,
                             CompanyName = "Saftfabriken",
                             Email = "company1@gmail.com",
-                            Password = "$2a$11$LLsh.nryAFGqLk9U37FUz.mMzOEzQWNhKHKMbm6P7uWQlSM4q/Ao6",
+                            Password = "Password123",
                             Role = "company"
                         },
                         new
@@ -222,7 +225,7 @@ namespace Bokkingsystem.Migrations
                             CompanyId = 2,
                             CompanyName = "Pommesfabriken",
                             Email = "company2@gmail.com",
-                            Password = "$2a$11$FVSchMRuG4l/qGx2NKBSnuhhfsPAxAbKsysh/HF2glWhrXaT/Mbsy",
+                            Password = "Password123",
                             Role = "company"
                         });
                 });
@@ -272,7 +275,7 @@ namespace Bokkingsystem.Migrations
                             Email = "customer1@mail.se",
                             FirstName = "Andreas",
                             LastName = "Andersson",
-                            Password = "$2a$11$RLFLd7B2BjEL.Stav60WO.vmcalnATqnnYNnJokzKjn3bee0sE0im",
+                            Password = "Password123",
                             Role = "customer",
                             UserName = "Andreas"
                         },
@@ -282,7 +285,7 @@ namespace Bokkingsystem.Migrations
                             Email = "customer2@mail.se",
                             FirstName = "Bengt",
                             LastName = "Bengtsson",
-                            Password = "$2a$11$nIR0dS8J9QUszPDZMrfy8ebVirL6Vg5.e1Wl3iwd9bLEmV0Qb0iXe",
+                            Password = "Password123",
                             Role = "customer",
                             UserName = "benben"
                         },
@@ -292,7 +295,7 @@ namespace Bokkingsystem.Migrations
                             Email = "customer3@mail.se",
                             FirstName = "Carl",
                             LastName = "Carlsson",
-                            Password = "$2a$11$MLAWyuIhISJXgQWw.J8qu.1wbvMZaYNcAUfqrrGP5qMZo/hPfYpra",
+                            Password = "Password123",
                             Role = "customer",
                             UserName = "carlycarl"
                         });

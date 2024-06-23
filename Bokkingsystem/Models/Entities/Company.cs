@@ -17,8 +17,8 @@ namespace Bokkingsystem.Models.Entities
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        public AppUser AppUser { get; set; }
-        public string AppUserId { get; set; }
-        public string Role { get; set; } = "Company";
+        //  public AppUser AppUser { get; set; }
+        // public string AppUserId { get; set; }
+        public string Role { get; set; } = "company";
     }
 }

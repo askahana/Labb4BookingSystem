@@ -4,6 +4,7 @@ using Bokkingsystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bokkingsystem.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    partial class BookingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622210044_sixth")]
+    partial class sixth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,18 +36,12 @@ namespace Bokkingsystem.Migrations
                     b.Property<string>("CompanyId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CompanyId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CustomerId1")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -90,10 +87,6 @@ namespace Bokkingsystem.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId1");
-
-                    b.HasIndex("CustomerId1");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -143,7 +136,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 1,
                             BookedDate = new DateTime(2024, 4, 23, 14, 30, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7392),
+                            CreatedDate = new DateTime(2024, 6, 22, 23, 0, 44, 352, DateTimeKind.Local).AddTicks(2922),
                             CustomerId = 1
                         },
                         new
@@ -151,7 +144,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 2,
                             BookedDate = new DateTime(2024, 4, 25, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7608),
+                            CreatedDate = new DateTime(2024, 6, 22, 23, 0, 44, 352, DateTimeKind.Local).AddTicks(2992),
                             CustomerId = 1
                         },
                         new
@@ -159,7 +152,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 3,
                             BookedDate = new DateTime(2024, 4, 29, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7650),
+                            CreatedDate = new DateTime(2024, 6, 22, 23, 0, 44, 352, DateTimeKind.Local).AddTicks(3004),
                             CustomerId = 1
                         },
                         new
@@ -167,7 +160,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 4,
                             BookedDate = new DateTime(2024, 5, 21, 14, 30, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7700),
+                            CreatedDate = new DateTime(2024, 6, 22, 23, 0, 44, 352, DateTimeKind.Local).AddTicks(3014),
                             CustomerId = 1
                         },
                         new
@@ -175,7 +168,7 @@ namespace Bokkingsystem.Migrations
                             AppointmentId = 5,
                             BookedDate = new DateTime(2024, 5, 22, 11, 15, 0, 0, DateTimeKind.Unspecified),
                             CompanyId = 1,
-                            CreatedDate = new DateTime(2024, 6, 23, 14, 47, 54, 131, DateTimeKind.Local).AddTicks(7716),
+                            CreatedDate = new DateTime(2024, 6, 22, 23, 0, 44, 352, DateTimeKind.Local).AddTicks(3074),
                             CustomerId = 2
                         });
                 });
@@ -188,6 +181,9 @@ namespace Bokkingsystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyId"));
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CompanyName")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -197,7 +193,7 @@ namespace Bokkingsystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -205,6 +201,10 @@ namespace Bokkingsystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CompanyId");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique()
+                        .HasFilter("[AppUserId] IS NOT NULL");
 
                     b.ToTable("Companies");
 
@@ -214,16 +214,16 @@ namespace Bokkingsystem.Migrations
                             CompanyId = 1,
                             CompanyName = "Saftfabriken",
                             Email = "company1@gmail.com",
-                            Password = "$2a$11$LLsh.nryAFGqLk9U37FUz.mMzOEzQWNhKHKMbm6P7uWQlSM4q/Ao6",
-                            Role = "company"
+                            PasswordHash = "AQAAAAIAAYagAAAAEFTObsf8QxNokt0g3NP5BKvhUMKsHsihfdg4c4tPK+SASVzL/TRVlAx2ggC5VVS6/w==",
+                            Role = "Company"
                         },
                         new
                         {
                             CompanyId = 2,
                             CompanyName = "Pommesfabriken",
                             Email = "company2@gmail.com",
-                            Password = "$2a$11$FVSchMRuG4l/qGx2NKBSnuhhfsPAxAbKsysh/HF2glWhrXaT/Mbsy",
-                            Role = "company"
+                            PasswordHash = "AQAAAAIAAYagAAAAEFTObsf8QxNokt0g3NP5BKvhUMKsHsihfdg4c4tPK+SASVzL/TRVlAx2ggC5VVS6/w==",
+                            Role = "Company"
                         });
                 });
 
@@ -234,6 +234,9 @@ namespace Bokkingsystem.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -249,7 +252,7 @@ namespace Bokkingsystem.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -263,6 +266,10 @@ namespace Bokkingsystem.Migrations
 
                     b.HasKey("CustomerId");
 
+                    b.HasIndex("AppUserId")
+                        .IsUnique()
+                        .HasFilter("[AppUserId] IS NOT NULL");
+
                     b.ToTable("Customers");
 
                     b.HasData(
@@ -272,8 +279,8 @@ namespace Bokkingsystem.Migrations
                             Email = "customer1@mail.se",
                             FirstName = "Andreas",
                             LastName = "Andersson",
-                            Password = "$2a$11$RLFLd7B2BjEL.Stav60WO.vmcalnATqnnYNnJokzKjn3bee0sE0im",
-                            Role = "customer",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFD/Q0fua2yLhsjlvcmahEqaHixikZ0Sc1vwXb5zxd+FUG6Bc2Fhi6niiogGqmz9aQ==",
+                            Role = "Customer",
                             UserName = "Andreas"
                         },
                         new
@@ -282,8 +289,8 @@ namespace Bokkingsystem.Migrations
                             Email = "customer2@mail.se",
                             FirstName = "Bengt",
                             LastName = "Bengtsson",
-                            Password = "$2a$11$nIR0dS8J9QUszPDZMrfy8ebVirL6Vg5.e1Wl3iwd9bLEmV0Qb0iXe",
-                            Role = "customer",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFD/Q0fua2yLhsjlvcmahEqaHixikZ0Sc1vwXb5zxd+FUG6Bc2Fhi6niiogGqmz9aQ==",
+                            Role = "Customer",
                             UserName = "benben"
                         },
                         new
@@ -292,8 +299,8 @@ namespace Bokkingsystem.Migrations
                             Email = "customer3@mail.se",
                             FirstName = "Carl",
                             LastName = "Carlsson",
-                            Password = "$2a$11$MLAWyuIhISJXgQWw.J8qu.1wbvMZaYNcAUfqrrGP5qMZo/hPfYpra",
-                            Role = "customer",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFD/Q0fua2yLhsjlvcmahEqaHixikZ0Sc1vwXb5zxd+FUG6Bc2Fhi6niiogGqmz9aQ==",
+                            Role = "Customer",
                             UserName = "carlycarl"
                         });
                 });
@@ -455,21 +462,6 @@ namespace Bokkingsystem.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Bokkingsystem.Data.AppUser", b =>
-                {
-                    b.HasOne("Bokkingsystem.Models.Entities.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId1");
-
-                    b.HasOne("Bokkingsystem.Models.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId1");
-
-                    b.Navigation("Company");
-
-                    b.Navigation("Customer");
-                });
-
             modelBuilder.Entity("Bokkingsystem.Models.Entities.Appointment", b =>
                 {
                     b.HasOne("Bokkingsystem.Models.Entities.Company", "Company")
@@ -487,6 +479,24 @@ namespace Bokkingsystem.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Bokkingsystem.Models.Entities.Company", b =>
+                {
+                    b.HasOne("Bokkingsystem.Data.AppUser", "AppUser")
+                        .WithOne("Company")
+                        .HasForeignKey("Bokkingsystem.Models.Entities.Company", "AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Bokkingsystem.Models.Entities.Customer", b =>
+                {
+                    b.HasOne("Bokkingsystem.Data.AppUser", "AppUser")
+                        .WithOne("Customer")
+                        .HasForeignKey("Bokkingsystem.Models.Entities.Customer", "AppUserId");
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Bokkingsystem.Models.Entities.History", b =>
@@ -549,6 +559,13 @@ namespace Bokkingsystem.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Bokkingsystem.Data.AppUser", b =>
+                {
+                    b.Navigation("Company");
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Bokkingsystem.Models.Entities.Customer", b =>

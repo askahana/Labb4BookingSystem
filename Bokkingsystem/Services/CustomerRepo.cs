@@ -12,9 +12,11 @@ namespace Bokkingsystem.Services
             _db = db;   
         }
 
-        public Task<Customer> Add(Customer NewEntity)
+        public async Task<Customer> Add(Customer NewEntity)
         {
-            throw new NotImplementedException();
+            var result = await _db.Customers.AddAsync(NewEntity);
+            await _db.SaveChangesAsync();
+            return result.Entity;
         }
 
         public Task<Customer> Delete(int id)

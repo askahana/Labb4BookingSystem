@@ -1,4 +1,5 @@
 ﻿using Bokkingsystem.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,10 @@ namespace Bokkingsystem.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Company>()
+            var passwordHasher = new PasswordHasher<AppUser>();
+            string hashedPassword1 = passwordHasher.HashPassword(null, "Company@123");
+            string hashedPassword2 = passwordHasher.HashPassword(null, "Customer@123");
+          /*  modelBuilder.Entity<Company>()
                 .HasOne(c => c.AppUser)
                 .WithOne(u => u.Company)
                 .HasForeignKey<Company>(c => c.AppUserId);
@@ -25,21 +29,21 @@ namespace Bokkingsystem.Data
             modelBuilder.Entity<Customer>()
                 .HasOne(c => c.AppUser)
                 .WithOne(u => u.Customer)
-                .HasForeignKey<Customer>(c => c.AppUserId);
+                .HasForeignKey<Customer>(c => c.AppUserId);*/
 
             modelBuilder.Entity<Company>().HasData(new Company
             {
                 CompanyId = 1,
                 CompanyName = "Saftfabriken",
                 Email = "company1@gmail.com",
-                Password = "Company@123"
+                Password = BCrypt.Net.BCrypt.HashPassword("Password123"),
             }) ;
             modelBuilder.Entity<Company>().HasData(new Company
             {
                 CompanyId = 2,
                 CompanyName = "Pommesfabriken",
                 Email = "company2@gmail.com",
-                Password = "Company@123"
+                Password = BCrypt.Net.BCrypt.HashPassword("Password123"),
             });
             modelBuilder.Entity<Customer>().HasData(new Customer
             {
@@ -48,7 +52,7 @@ namespace Bokkingsystem.Data
                 LastName = "Andersson",
                 Email = "customer1@mail.se",
                 UserName = "Andreas",
-                Password = "1234"
+                Password = BCrypt.Net.BCrypt.HashPassword("Password123"),
             });
             modelBuilder.Entity<Customer>().HasData(new Customer
             {
@@ -57,7 +61,7 @@ namespace Bokkingsystem.Data
                 LastName = "Bengtsson",
                 Email = "customer2@mail.se",
                 UserName = "benben",
-                Password = "1234"
+                Password = BCrypt.Net.BCrypt.HashPassword("Password123"),
             });
             modelBuilder.Entity<Customer>().HasData(new Customer
             {
@@ -66,7 +70,7 @@ namespace Bokkingsystem.Data
                 LastName = "Carlsson",
                 Email = "customer3@mail.se",
                 UserName = "carlycarl",
-                Password = "1234"
+                Password = BCrypt.Net.BCrypt.HashPassword("Password123"),
             });
             modelBuilder.Entity<Appointment>().HasData(new Appointment
             {

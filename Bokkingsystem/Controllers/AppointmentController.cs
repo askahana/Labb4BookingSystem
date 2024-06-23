@@ -36,6 +36,7 @@ namespace Bokkingsystem.Controllers
                    "Error to retrive data from database");
             }
         }
+
         [HttpGet("appointment/{appointmentId}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyPolicy")]
         public async Task<IActionResult> GetSingel(int appointmentId)
@@ -55,7 +56,7 @@ namespace Bokkingsystem.Controllers
             }
         }
         [HttpGet("customer/{customerId}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomer5Policy")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomerPolicy")]
         public async Task<IActionResult> GetAllAppointmentsByCustomer(int customerId)
         {
             try
@@ -152,7 +153,7 @@ namespace Bokkingsystem.Controllers
             }
         }
         [HttpDelete("{id:int}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomer5Policy")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomerPolicy")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
             try
@@ -173,7 +174,7 @@ namespace Bokkingsystem.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomer5Policy")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomerPolicy")]
         public async Task<ActionResult<Appointment>> CreateNewAppointment(Appointment newAppointment)
         {
             try
@@ -197,7 +198,7 @@ namespace Bokkingsystem.Controllers
         }
 
         [HttpPut("{id:int}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomer5Policy")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "AdminCompanyCustomerPolicy")]
         public async Task<ActionResult<Appointment>> UppdateAppointment(int appointmentId, Appointment appointment)
         {
             try

@@ -48,7 +48,6 @@ namespace Bokkingsystem
             });
 
 
-
             /*
             builder.Services.AddAuthentication(options =>
             {
@@ -150,6 +149,7 @@ namespace Bokkingsystem
                 return Results.Ok(await account.Login(login));
             }).AllowAnonymous();
             */
+            /*
             app.MapPost("/account/create",
                async (LoginDTO model, UserManager<AppUser> userManager, IMapper mapper, BookingDbContext db) =>
                {
@@ -194,7 +194,6 @@ namespace Bokkingsystem
                    {
                        Customer customer = new Customer
                        {
-                        
                            Email = model.Email,
                            UserName = model.Email,
                            Password = model.Password,
@@ -208,7 +207,6 @@ namespace Bokkingsystem
                    {
                        Company company = new Company
                        {
-              
                            Email = model.Email,
                            Password = model.Password,
                            Role = model.Role,
@@ -220,7 +218,7 @@ namespace Bokkingsystem
 
                    await db.SaveChangesAsync();*/
 
-
+            /*
                    return Results.Ok("User created successfully.");
                });
 
@@ -250,7 +248,7 @@ namespace Bokkingsystem
                     signingCredentials: credentials);
 
                 return Results.Ok(new JwtSecurityTokenHandler().WriteToken(token));
-            });
+            });*/
 
             app.MapControllers();
 
